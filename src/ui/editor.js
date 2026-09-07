@@ -196,7 +196,9 @@ export function createEditor({ slotId, onDone, onExit }) {
   const tabsNav = el('nav', 'dr-tabs', head);
   tabsNav.setAttribute('role', 'tablist');
   const tabButtons = {};
-  const tabOrder = animated ? ['draw', 'rig', 'sound'] : ['draw', 'sound'];
+  const tabOrder = ['draw'];
+  if (animated) tabOrder.push('rig');
+  if (slot.sound) tabOrder.push('sound');
   tabOrder.forEach((id) => {
     const node = el('button', 'dr-tab', tabsNav, copy.tabs[id]);
     node.type = 'button';
@@ -1148,7 +1150,7 @@ export function createEditor({ slotId, onDone, onExit }) {
 
   function setTab(next) {
     if (next === tab) return;
-    if (next === 'rig' && !animated) return;
+    if (tabOrder.indexOf(next) === -1) return;
     tab = next;
     root.dataset.tab = next;
     tabOrder.forEach((id) => {
@@ -1282,6 +1284,7 @@ export function createEditor({ slotId, onDone, onExit }) {
       return;
     }
     if (disposed) return;
+    micDenied = false;
     recordState = 'recording';
     recordStart = performance.now();
     setRecordLabel(copy.recording('0.0'), true);

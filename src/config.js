@@ -161,7 +161,7 @@ export const COPY = {
     heroDraw: 'Draw',
     heroEdit: 'Edit',
     groups: {
-      terrain: { name: 'Terrain', count: '3 slots · 100% coverage required' },
+      terrain: { name: 'Terrain', count: '3 slots · the ground block must be solid' },
       creature: { name: 'Creatures', count: '6 slots' },
       loot: { name: 'Loot', count: '2 slots' },
       backdrop: { name: 'Backdrop', count: '3 slots' },

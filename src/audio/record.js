@@ -29,12 +29,13 @@ export function createRecorder() {
   let startedAt = 0;
   let cancelled = false;
   let disposed = false;
-  let waiting = [];
+  let pending = null;
+  let deliver = null;
 
   function settle(result) {
-    const list = waiting;
-    waiting = [];
-    for (let i = 0; i < list.length; i += 1) list[i](result);
+    const send = deliver;
+    deliver = null;
+    if (send) send(result);
   }
 
   function stopTracks() {
@@ -106,17 +107,15 @@ export function createRecorder() {
         cancelled = true;
         finalize();
       };
+      pending = new Promise((resolve) => { deliver = resolve; });
       startedAt = performance.now();
       state = 'recording';
       recorder.start();
       timer = setTimeout(stopNow, AUDIO.maxMs);
     },
     stop() {
-      if (state !== 'recording') return Promise.resolve(emptyResult());
-      return new Promise((resolve) => {
-        waiting.push(resolve);
-        stopNow();
-      });
+      if (state === 'recording') stopNow();
+      return pending || Promise.resolve(emptyResult());
     },
     cancel() {
       if (state !== 'recording') {
@@ -146,6 +145,7 @@ export function createRecorder() {
       } else {
         settle(emptyResult());
       }
+      pending = null;
       recorder = null;
       chunks = [];
       state = 'disposed';
