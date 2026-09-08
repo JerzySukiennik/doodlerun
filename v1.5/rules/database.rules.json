@@ -1,0 +1,267 @@
+{
+  "rules": {
+    "lobbies": {
+      ".read": true,
+      "$code": {
+        ".write": "$code.matches(/^[A-Z]{4}$/)",
+        "code": {
+          ".validate": "newData.isString() && newData.val().length == 4"
+        },
+        "nick": {
+          ".validate": "newData.isString() && newData.val().length <= 16"
+        },
+        "players": {
+          ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 8"
+        },
+        "phase": {
+          ".validate": "newData.isString() && newData.val().length <= 8"
+        },
+        "updated": {
+          ".validate": "newData.isNumber()"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
+    },
+    "rooms": {
+      "$code": {
+        ".read": "$code.matches(/^[A-Z]{4}$/)",
+        ".write": "$code.matches(/^[A-Z]{4}$/)",
+        "meta": {
+          "host": {
+            ".validate": "newData.isString() && newData.val().length <= 32"
+          },
+          "phase": {
+            ".validate": "newData.isString() && newData.val().length <= 8"
+          },
+          "seed": {
+            ".validate": "newData.isNumber()"
+          },
+          "generation": {
+            ".validate": "newData.isNumber()"
+          },
+          "created": {
+            ".validate": "newData.isNumber()"
+          },
+          "open": {
+            ".validate": "newData.isBoolean()"
+          },
+          "$other": {
+            ".validate": false
+          },
+          "checkpoint": {
+            ".validate": "newData.isNumber() && newData.val() >= 0"
+          }
+        },
+        "players": {
+          "$playerId": {
+            "nick": {
+              ".validate": "newData.isString() && newData.val().length <= 16"
+            },
+            "beat": {
+              ".validate": "newData.isNumber()"
+            },
+            "joined": {
+              ".validate": "newData.isNumber()"
+            },
+            "ready": {
+              ".validate": "newData.isBoolean()"
+            },
+            "hero": {
+              ".validate": "newData.isBoolean()"
+            },
+            "$other": {
+              ".validate": false
+            }
+          }
+        },
+        "slots": {
+          "$slotId": {
+            "owner": {
+              ".validate": "newData.isString() && newData.val().length <= 32"
+            },
+            "done": {
+              ".validate": "newData.isBoolean()"
+            },
+            "at": {
+              ".validate": "newData.isNumber()"
+            },
+            "$other": {
+              ".validate": false
+            }
+          }
+        },
+        "assets": {
+          "$slotId": {
+            "png": {
+              ".validate": "newData.isString() && newData.val().length <= 400000"
+            },
+            "by": {
+              ".validate": "newData.isString() && newData.val().length <= 32"
+            },
+            "at": {
+              ".validate": "newData.isNumber()"
+            },
+            "rig": {
+              "behaviour": {
+                ".validate": "newData.isString() && newData.val().length <= 8"
+              },
+              "points": {
+                "$role": {
+                  "x": {
+                    ".validate": "newData.isNumber()"
+                  },
+                  "y": {
+                    ".validate": "newData.isNumber()"
+                  },
+                  "$other": {
+                    ".validate": false
+                  }
+                }
+              },
+              "$other": {
+                ".validate": false
+              }
+            },
+            "sound": {
+              "data": {
+                ".validate": "newData.isString() && newData.val().length <= 400000"
+              },
+              "mimeType": {
+                ".validate": "newData.isString() && newData.val().length <= 40"
+              },
+              "durationMs": {
+                ".validate": "newData.isNumber()"
+              },
+              "$other": {
+                ".validate": false
+              }
+            },
+            "$other": {
+              ".validate": false
+            }
+          }
+        },
+        "heroes": {
+          "$playerId": {
+            "png": {
+              ".validate": "newData.isString() && newData.val().length <= 400000"
+            },
+            "by": {
+              ".validate": "newData.isString() && newData.val().length <= 32"
+            },
+            "at": {
+              ".validate": "newData.isNumber()"
+            },
+            "rig": {
+              "behaviour": {
+                ".validate": "newData.isString() && newData.val().length <= 8"
+              },
+              "points": {
+                "$role": {
+                  "x": {
+                    ".validate": "newData.isNumber()"
+                  },
+                  "y": {
+                    ".validate": "newData.isNumber()"
+                  },
+                  "$other": {
+                    ".validate": false
+                  }
+                }
+              },
+              "$other": {
+                ".validate": false
+              }
+            },
+            "sound": {
+              "data": {
+                ".validate": "newData.isString() && newData.val().length <= 400000"
+              },
+              "mimeType": {
+                ".validate": "newData.isString() && newData.val().length <= 40"
+              },
+              "durationMs": {
+                ".validate": "newData.isNumber()"
+              },
+              "$other": {
+                ".validate": false
+              }
+            },
+            "$other": {
+              ".validate": false
+            }
+          }
+        },
+        "live": {
+          "$playerId": {
+            "x": {
+              ".validate": "newData.isNumber()"
+            },
+            "y": {
+              ".validate": "newData.isNumber()"
+            },
+            "m": {
+              ".validate": "newData.isNumber()"
+            },
+            "s": {
+              ".validate": "newData.isString() && newData.val().length <= 8"
+            },
+            "t": {
+              ".validate": "newData.isNumber()"
+            },
+            "$other": {
+              ".validate": false
+            }
+          }
+        },
+        "death": {
+          "by": {
+            ".validate": "newData.isString() && newData.val().length <= 32"
+          },
+          "cause": {
+            ".validate": "newData.isString() && newData.val().length <= 64"
+          },
+          "m": {
+            ".validate": "newData.isNumber()"
+          },
+          "generation": {
+            ".validate": "newData.isNumber()"
+          },
+          "at": {
+            ".validate": "newData.isNumber()"
+          },
+          "$other": {
+            ".validate": false
+          }
+        },
+        "$other": {
+          ".validate": false
+        },
+        "music": {
+          "$trackId": {
+            "data": {
+              ".validate": "newData.isString() && newData.val().length <= 400000"
+            },
+            "mimeType": {
+              ".validate": "newData.isString() && newData.val().length <= 40"
+            },
+            "durationMs": {
+              ".validate": "newData.isNumber()"
+            },
+            "by": {
+              ".validate": "newData.isString() && newData.val().length <= 32"
+            },
+            "at": {
+              ".validate": "newData.isNumber()"
+            },
+            "$other": {
+              ".validate": false
+            }
+          }
+        }
+      }
+    }
+  }
+}
